@@ -1,3 +1,4 @@
+# coding: utf-8
 {%- from "gitlab/map.jinja" import server with context %}
 ## GitLab configuration settings
 ##! This file is generated during initial installation and **is not** modified
@@ -45,11 +46,15 @@ external_url 'https://{{ server.server_name }}'
 # gitlab_rails['time_zone'] = 'UTC'
 
 ### Email Settings
-# gitlab_rails['gitlab_email_enabled'] = true
+{% if server.mail is not defined %}
+gitlab_rails['gitlab_email_enabled'] = false
+{% else %}
+gitlab_rails['gitlab_email_enabled'] = true
 gitlab_rails['gitlab_email_from'] = '{{ server.mail.from }}'
 # gitlab_rails['gitlab_email_display_name'] = 'Example'
 gitlab_rails['gitlab_email_reply_to'] = '{{ server.mail.reply_to }}'
 # gitlab_rails['gitlab_email_subject_suffix'] = ''
+{% endif %}
 
 ### GitLab user privileges
 # gitlab_rails['gitlab_default_can_create_group'] = true
@@ -416,6 +421,7 @@ gitlab_rails['redis_port'] = 6379
 ###! Docs: https://docs.gitlab.com/omnibus/settings/smtp.html
 ###! **Use smtp instead of sendmail/postfix.**
 
+{% if server.mail is defined %}
 gitlab_rails['smtp_enable'] = true
 gitlab_rails['smtp_address'] = "{{ server.mail.host }}"
 gitlab_rails['smtp_port'] = {{ server.mail.port }}
@@ -432,6 +438,7 @@ gitlab_rails['smtp_tls'] = {{ server.mail.use_tls|lower }}
 
 # gitlab_rails['smtp_ca_path'] = "/etc/ssl/certs"
 # gitlab_rails['smtp_ca_file'] = "/etc/ssl/certs/ca-certificates.crt"
+{% endif %}
 
 ################################################################################
 ## Container Registry settings
