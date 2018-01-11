@@ -34,11 +34,7 @@
         }
 
     },
-}, merge=salt['grains.filter_by']({
-    'Debian': {
-        'pkgs': ['gitlab']
-    }
-   }), merge=salt['pillar.get']('gitlab:server')) %}
+}, merge=salt['pillar.get']('gitlab:server')) %}
 
 {%- endif %}
 
