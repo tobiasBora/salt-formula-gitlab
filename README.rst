@@ -27,7 +27,7 @@ Gitlab server with local MTA and PostgreSQL database
           engine: pkg
         database:
           engine: 'postgresql'
-          host: 'locslhost'
+          host: 'localhost'
           name: 'gitlab'
           password: 'LfTno5mYdZmRfoPV'
           user: 'gitlab'
